@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bri's Shadow Heart Cosplay Countdown</title>
+    <!-- 1. We'll load Tailwind CSS for easy, modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. We'll load the "Inter" font for a clean look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* A simple style to use our loaded font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen p-4">
+
+    <!-- Main Content Box -->
+    <div class="bg-gray-800 p-8 sm:p-12 rounded-2xl shadow-2xl text-center max-w-3xl w-full border border-purple-500/30">
+        
+        <!-- Main Title -->
+        <h1 class="text-3xl sm:text-5xl font-black text-purple-300 mb-2 tracking-tight">
+            Bri's Shadow Heart Cosplay Countdown
+        </h1>
+        
+        <!-- Subtitle -->
+        <p class="text-lg sm:text-xl text-gray-400 mb-8">
+            Time until the reveal:
+        </p>
+
+        <!-- The Countdown Timer -->
+        <div id="countdown" class="flex justify-center gap-2 sm:gap-4">
+            
+            <!-- Days -->
+            <div class="bg-gray-700/50 p-4 rounded-lg min-w-[70px] sm:min-w-[100px] border border-gray-700">
+                <span id="days" class="block text-4xl sm:text-6xl font-bold text-purple-200">0</span>
+                <span class="block text-xs sm:text-sm uppercase text-gray-400">Days</span>
+            </div>
+            
+            <!-- Hours -->
+            <div class="bg-gray-700/50 p-4 rounded-lg min-w-[70px] sm:min-w-[100px] border border-gray-700">
+                <span id="hours" class="block text-4xl sm:text-6xl font-bold text-purple-200">0</span>
+                <span class="block text-xs sm:text-sm uppercase text-gray-400">Hours</span>
+            </div>
+            
+            <!-- Minutes -->
+            <div class="bg-gray-700/50 p-4 rounded-lg min-w-[70px] sm:min-w-[100px] border border-gray-700">
+                <span id="minutes" class="block text-4xl sm:text-6xl font-bold text-purple-200">0</span>
+                <span class="block text-xs sm:text-sm uppercase text-gray-400">Minutes</span>
+            </div>
+            
+            <!-- Seconds -->
+            <div class="bg-gray-700/50 p-4 rounded-lg min-w-[70px] sm:min-w-[100px] border border-gray-700">
+                <span id="seconds" class="block text-4xl sm:text-6xl font-bold text-purple-200">0</span>
+                <span class="block text-xs sm:text-sm uppercase text-gray-400">Seconds</span>
+            </div>
+        </div>
+
+        <!-- This will be shown when the timer hits zero -->
+        <div id="expired-message" class="hidden mt-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-green-400">The time has arrived!</h2>
+            <p class="text-lg text-gray-300">The countdown is over!</p>
+        </div>
+    </div>
+
+    <script>
+        // --- The JavaScript Countdown Logic ---
+
+        // 3. SET YOUR TARGET DATE HERE
+        // I'm using the timestamp 1761939000 we talked about (Nov 26, 2025).
+        // JavaScript needs the timestamp in milliseconds, so we multiply by 1000.
+        const countDownDate = new Date(1761939000 * 1000).getTime();
+
+        // --- To use a different date, replace the line above with this format: ---
+        // const countDownDate = new Date("November 26, 2025 18:10:00").getTime();
+        // (You can change "November 26, 2025 18:10:00" to any date and time you want)
+
+        // 4. Get the HTML elements we need to update
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        const countdownEl = document.getElementById('countdown');
+        const expiredEl = document.getElementById('expired-message');
+
+        // 5. Create a function to update the clock
+        function updateClock() {
+            // Get today's date and time
+            const now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            const distance = countDownDate - now;
+
+            // 6. Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // 7. Check if the countdown is over
+            if (distance < 0) {
+                clearInterval(interval); // Stop the timer
+                countdownEl.classList.add('hidden'); // Hide the clock
+                expiredEl.classList.remove('hidden'); // Show the expired message
+                return;
+            }
+
+            // 8. Update the HTML with the new numbers
+            // We use .padStart(2, '0') to add a '0' in front of numbers < 10 (e.g., 09)
+            daysEl.innerHTML = String(days).padStart(2, '0');
+            hoursEl.innerHTML = String(hours).padStart(2, '0');
+            minutesEl.innerHTML = String(minutes).padStart(2, '0');
+            secondsEl.innerHTML = String(seconds).padStart(2, '0');
+        }
+        
+        // 9. Run the function once immediately so it doesn't flash "0"
+        updateClock();
+
+        // 10. Run the updateClock function every 1 second (1000 milliseconds)
+        const interval = setInterval(updateClock, 1000);
+    </script>
+
+</body>
+</html>
