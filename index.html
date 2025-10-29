@@ -7,27 +7,72 @@
     <!-- 1. We'll load Tailwind CSS for easy, modern styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- 2. We'll load the "Inter" font for a clean look -->
+    <!-- 2. We'll load the "Inter" font and a new "EB Garamond" font for style -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=Inter:wght@400;900&display=swap" rel="stylesheet">
     
     <style>
-        /* A simple style to use our loaded font */
+        /* A simple style to use our loaded fonts */
         body {
             font-family: 'Inter', sans-serif;
+            /* New: Adding a moody radial gradient background */
+            background: radial-gradient(ellipse at center, #2c1a3e, #111118);
+        }
+
+        .title-font {
+            font-family: 'EB Garamond', serif;
+        }
+
+        /* New: Styles for the image slideshow */
+        .slideshow-image {
+            /* This will make the images fade in and out */
+            transition: opacity 1.5s ease-in-out;
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen p-4">
+<body class="text-white flex items-center justify-center min-h-screen p-4">
 
     <!-- Main Content Box -->
-    <div class="bg-gray-800 p-8 sm:p-12 rounded-2xl shadow-2xl text-center max-w-3xl w-full border border-purple-500/30">
+    <!-- New: Made the box slightly transparent and added a purple glow effect -->
+    <div class="bg-gray-900 bg-opacity-70 backdrop-blur-sm p-8 sm:p-12 rounded-2xl shadow-2xl text-center max-w-3xl w-full border border-purple-500/30 shadow-purple-500/20">
         
         <!-- Main Title -->
-        <h1 class="text-3xl sm:text-5xl font-black text-purple-300 mb-2 tracking-tight">
+        <!-- New: Using the new title-font class -->
+        <h1 class="text-4xl sm:text-6xl font-black text-purple-300 mb-4 tracking-tight title-font">
             Bri's Shadow Heart Cosplay Countdown
         </h1>
+
+        <!-- New: Image Slideshow Container -->
+        <div id="slideshow-container" class="w-full max-w-lg mx-auto h-64 sm:h-80 relative rounded-lg overflow-hidden mb-8 border border-purple-500/30 shadow-lg">
+            <!-- 
+                Here are your 6 images from GitHub.
+                The first one starts visible (opacity-100) and the rest are hidden (opacity-0).
+            -->
+            <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/f4fd256983adf79e5c37e0766ec0b59d50a263ac/199px-Shadowheart_Camp_Model.webp.png" 
+                 alt="Shadow Heart Outfit 1" 
+                 class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-100">
+            
+            <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/f4fd256983adf79e5c37e0766ec0b59d50a263ac/465px-Shadowheart-artbook-concept2.png" 
+                 alt="Shadow Heart Outfit 2" 
+                 class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-0">
+            
+            <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/f4fd256983adf79e5c37e0766ec0b59d50a263ac/750px-Edward-vanderghote-shadowheart.jpg" 
+                 alt="Shadow Heart Outfit 3" 
+                 class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-0">
+            
+            <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/f4fd256983adf79e5c37e0766ec0b59d50a263ac/Shadowheart-character-creator.png" 
+                 alt="Shadow Heart Outfit 4" 
+                 class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-0">
+            
+            <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/f4fd256983adf79e5c37e0766ec0b59d50a263ac/Shadowheart-ea.jpg" 
+                 alt="Shadow Heart Outfit 5" 
+                 class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-0">
+            
+            <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/f4fd256983adf79e5c37e0766ec0b59d50a263ac/Shadowheart_EA_Model%20(1).png" 
+                 alt="Shadow Heart Outfit 6" 
+                 class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-0">
+        </div>
         
         <!-- Subtitle -->
         <p class="text-lg sm:text-xl text-gray-400 mb-8">
@@ -73,13 +118,7 @@
         // --- The JavaScript Countdown Logic ---
 
         // 3. SET YOUR TARGET DATE HERE
-        // I'm using the timestamp 1761939000 we talked about (Nov 26, 2025).
-        // JavaScript needs the timestamp in milliseconds, so we multiply by 1000.
-        const countDownDate = new Date(1761939000 * 1000).getTime();
-
-        // --- To use a different date, replace the line above with this format: ---
-        // const countDownDate = new Date("November 26, 2025 18:10:00").getTime();
-        // (You can change "November 26, 2025 18:10:00" to any date and time you want)
+        const countDownDate = new Date("October 31, 2025 12:30:00").getTime();
 
         // 4. Get the HTML elements we need to update
         const daysEl = document.getElementById('days');
@@ -91,40 +130,60 @@
 
         // 5. Create a function to update the clock
         function updateClock() {
-            // Get today's date and time
+            // ... (rest of the clock logic is unchanged)
             const now = new Date().getTime();
-
-            // Find the distance between now and the count down date
             const distance = countDownDate - now;
 
-            // 6. Time calculations for days, hours, minutes and seconds
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
             
-            // 7. Check if the countdown is over
             if (distance < 0) {
-                clearInterval(interval); // Stop the timer
+                clearInterval(countdownInterval); // Stop the timer
                 countdownEl.classList.add('hidden'); // Hide the clock
                 expiredEl.classList.remove('hidden'); // Show the expired message
                 return;
             }
 
-            // 8. Update the HTML with the new numbers
-            // We use .padStart(2, '0') to add a '0' in front of numbers < 10 (e.g., 09)
             daysEl.innerHTML = String(days).padStart(2, '0');
             hoursEl.innerHTML = String(hours).padStart(2, '0');
             minutesEl.innerHTML = String(minutes).padStart(2, '0');
             secondsEl.innerHTML = String(seconds).padStart(2, '0');
         }
         
-        // 9. Run the function once immediately so it doesn't flash "0"
+        // 9. Run the function once immediately
         updateClock();
 
-        // 10. Run the updateClock function every 1 second (1000 milliseconds)
-        const interval = setInterval(updateClock, 1000);
+        // 10. Run the updateClock function every 1 second
+        const countdownInterval = setInterval(updateClock, 1000);
+
+
+        // --- NEW: JavaScript for Image Slideshow ---
+
+        // 1. Get all the images with the "slideshow-image" class
+        const slides = document.querySelectorAll('.slideshow-image');
+        let currentSlideIndex = 0;
+
+        // 2. Create a function to change the slide
+        function showNextSlide() {
+            // Hide the current slide (set opacity to 0)
+            slides[currentSlideIndex].classList.remove('opacity-100');
+            slides[currentSlideIndex].classList.add('opacity-0');
+
+            // Move to the next slide index
+            currentSlideIndex = (currentSlideIndex + 1) % slides.length; // % (modulo) loops back to 0
+
+            // Show the new slide (set opacity to 100)
+            slides[currentSlideIndex].classList.remove('opacity-0');
+            slides[currentSlideIndex].classList.add('opacity-100');
+        }
+
+        // 3. Set an interval to run the showNextSlide function every 4 seconds (4000 milliseconds)
+        setInterval(showNextSlide, 4000);
+
     </script>
 
 </body>
 </html>
+
