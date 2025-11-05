@@ -3,183 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bri's Shadow Heart Cosplay Countdown</title>
-    <!-- 1. We'll load Tailwind CSS for easy, modern styling -->
+    <title>Bri's Streaming Calendar</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- 2. We'll load the "Inter" font and a new "EB Garamond" font for style -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=Inter:wght@400;900&display=swap" rel="stylesheet">
     
     <style>
-        /* A simple style to use our loaded fonts */
         body {
             font-family: 'Inter', sans-serif;
-            /* New: Adding a moody radial gradient background */
             background: radial-gradient(ellipse at center, #2c1a3e, #111118);
         }
-
         .title-font {
             font-family: 'EB Garamond', serif;
         }
-
-        /* New: Styles for the image slideshow */
         .slideshow-image {
-            /* This will make the images fade in and out */
             transition: opacity 1.5s ease-in-out;
+        }
+        .event-button {
+            transition: all 0.3s ease;
+        }
+        .event-button:hover {
+            transform: translateY(-2px);
+            background-color: #583a7c; /* A slightly lighter purple on hover */
+        }
+        .event-button.active {
+            background-color: #6d28d9; /* Bright purple */
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(167, 139, 250, 0.5);
+            border-color: #a78bfa;
         }
     </style>
 </head>
 <body class="text-white flex items-center justify-center min-h-screen p-4">
 
-    <!-- Main Content Box -->
-    <!-- New: Made the box slightly transparent and added a purple glow effect -->
-    <div class="bg-gray-900 bg-opacity-70 backdrop-blur-sm p-8 sm:p-12 rounded-2xl shadow-2xl text-center max-w-3xl w-full border border-purple-500/30 shadow-purple-500/20">
+    <!-- Main Content Box --><div class="bg-gray-900 bg-opacity-70 backdrop-blur-sm p-8 sm:p-12 rounded-2xl shadow-2xl text-center max-w-4xl w-full border border-purple-500/30 shadow-purple-500/20">
         
-        <!-- Main Title -->
-        <!-- New: Using the new title-font class -->
         <h1 class="text-4xl sm:text-6xl font-black text-purple-300 mb-4 tracking-tight title-font">
-            Bri's Shadow Heart Cosplay Countdown
+            Bri's Streaming Calendar
         </h1>
 
-        <!-- New: Image Slideshow Container -->
-        <div id="slideshow-container" class="w-full max-w-lg mx-auto h-64 sm:h-80 relative rounded-lg overflow-hidden mb-8 border border-purple-500/30 shadow-lg">
-            <!-- 
-                Here are your 4 remaining images from GitHub.
-                The first one starts visible (opacity-100) and the rest are hidden (opacity-0).
-            -->
-            
-            <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/f4fd256983adf79e5c37e0766ec0b59d50a263ac/465px-Shadowheart-artbook-concept2.png" 
-                 alt="Shadow Heart Outfit 2" 
+        <!-- Image Slideshow Container with your 4 new photos --><!-- These URLs now point to the images you specified --><div id="slideshow-container" class="w-full max-w-lg mx-auto h-64 sm:h-80 relative rounded-lg overflow-hidden mb-8 border border-purple-500/30 shadow-lg">
+            <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/main/Bri1.jpg" 
+                 alt="Bri's Stream Photo 1" 
                  class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-100">
-            
-            <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/f4fd256983adf79e5c37e0766ec0b59d50a263ac/750px-Edward-vanderghote-shadowheart.jpg" 
-                 alt="Shadow Heart Outfit 3" 
+            <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/main/Bri2.jpg" 
+                 alt="Bri's Stream Photo 2" 
                  class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-0">
-            
-            <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/f4fd256983adf79e5c37e0766ec0b59d50a263ac/Shadowheart-character-creator.png" 
-                 alt="Shadow Heart Outfit 4" 
+            <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/main/Bri3.jpg" 
+                 alt="Bri's Stream Photo 3" 
                  class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-0">
-            
-            <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/f4fd256983adf79e5c37e0766ec0b59d50a263ac/Shadowheart-ea.jpg" 
-                 alt="Shadow Heart Outfit 5" 
+            <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/main/Bri4.jpg" 
+                 alt="Bri's Stream Photo 4" 
                  class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-0">
-            
         </div>
-        
-        <!-- Subtitle -->
-        <p class="text-lg sm:text-xl text-gray-400 mb-8">
-            Time until the reveal:
+
+        <!-- Title for the countdown timer --><p id="countdown-title" class="text-lg sm:text-2xl text-purple-200 mb-4">
+            Loading...
         </p>
 
-        <!-- The Countdown Timer -->
-        <div id="countdown" class="flex justify-center gap-2 sm:gap-4">
-            
-            <!-- Days -->
+        <!-- The Countdown Timer --><div id="countdown" class="flex justify-center gap-2 sm:gap-4 mb-8">
             <div class="bg-gray-700/50 p-4 rounded-lg min-w-[70px] sm:min-w-[100px] border border-gray-700">
-                <span id="days" class="block text-4xl sm:text-6xl font-bold text-purple-200">0</span>
+                <span id="days" class="block text-4xl sm:text-6xl font-bold text-purple-200">00</span>
                 <span class="block text-xs sm:text-sm uppercase text-gray-400">Days</span>
             </div>
-            
-            <!-- Hours -->
             <div class="bg-gray-700/50 p-4 rounded-lg min-w-[70px] sm:min-w-[100px] border border-gray-700">
-                <span id="hours" class="block text-4xl sm:text-6xl font-bold text-purple-200">0</span>
+                <span id="hours" class="block text-4xl sm:text-6xl font-bold text-purple-200">00</span>
                 <span class="block text-xs sm:text-sm uppercase text-gray-400">Hours</span>
             </div>
-            
-            <!-- Minutes -->
             <div class="bg-gray-700/50 p-4 rounded-lg min-w-[70px] sm:min-w-[100px] border border-gray-700">
-                <span id="minutes" class="block text-4xl sm:text-6xl font-bold text-purple-200">0</span>
+                <span id="minutes" class="block text-4xl sm:text-6xl font-bold text-purple-200">00</span>
                 <span class="block text-xs sm:text-sm uppercase text-gray-400">Minutes</span>
             </div>
-            
-            <!-- Seconds -->
             <div class="bg-gray-700/50 p-4 rounded-lg min-w-[70px] sm:min-w-[100px] border border-gray-700">
-                <span id="seconds" class="block text-4xl sm:text-6xl font-bold text-purple-200">0</span>
+                <span id="seconds" class="block text-4xl sm:text-6xl font-bold text-purple-200">00</span>
                 <span class="block text-xs sm:text-sm uppercase text-gray-400">Seconds</span>
             </div>
         </div>
 
-        <!-- This will be shown when the timer hits zero -->
-        <div id="expired-message" class="hidden mt-8">
-            <h2 class="text-3xl sm:text-4xl font-bold text-green-400">The time has arrived!</h2>
-            <p class="text-lg text-gray-300">The countdown is over!</p>
+        <!-- This will be shown when the timer hits zero --><div id="expired-message" class="hidden my-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-green-400">This event is live now!</h2>
+        </div>
+
+        <!-- Clickable Event List --><div class="border-t border-purple-500/30 pt-8">
+            <h3 class="text-2xl font-bold text-gray-300 mb-6">Upcoming Streams</h3>
+            <div id="event-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Events from your calendar. The JS will find these and make them clickable. --><!-- Past Events (relative to Nov 5, 2025) --><button class="event-button p-4 bg-gray-800/60 rounded-lg border border-gray-700" data-date="2025-10-27T10:30:00" data-name="Stardew Valley">
+                    <span class="block font-bold text-lg">Stardew Valley</span>
+                    <span class="block text-sm text-gray-400">Oct 27, 2025 @ 10:30 AM</span>
+                </button>
+                <button class="event-button p-4 bg-gray-800/60 rounded-lg border border-gray-700" data-date="2025-10-27T17:30:00" data-name="The Mortuary Assistant">
+                    <span class="block font-bold text-lg">The Mortuary Assistant</span>
+                    <span class="block text-sm text-gray-400">Oct 27, 2025 @ 5:30 PM</span>
+                </button>
+                <button class="event-button p-4 bg-gray-800/60 rounded-lg border border-gray-700" data-date="2025-10-31T12:30:00" data-name="Zombie Shadowheart Cosplay">
+                    <span class="block font-bold text-lg">Zombie Shadowheart Cosplay</span>
+                    <span class="block text-sm text-gray-400">Oct 31, 2025 @ 12:30 PM</span>
+                </button>
+                <button class="event-button p-4 bg-gray-800/60 rounded-lg border border-gray-700" data-date="2025-10-31T17:30:00" data-name="The Mortuary Assistant">
+                    <span class="block font-bold text-lg">The Mortuary Assistant</span>
+                    <span class="block text-sm text-gray-400">Oct 31, 2025 @ 5:30 PM</span>
+                </button>
+                <button class="event-button p-4 bg-gray-800/60 rounded-lg border border-gray-700" data-date="2025-11-03T10:30:00" data-name="Stardew Valley">
+                    <span class="block font-bold text-lg">Stardew Valley</span>
+                    <span class="block text-sm text-gray-400">Nov 3, 2025 @ 10:30 AM</span>
+                </button>
+                <button class="event-button p-4 bg-gray-800/60 rounded-lg border border-gray-700" data-date="2025-11-03T17:30:00" data-name="Movie OR 2nd Stream">
+                    <span class="block font-bold text-lg">Movie OR 2nd Stream</span>
+                    <span class="block text-sm text-gray-400">Nov 3, 2025 @ 5:30 PM</span>
+                </button>
+
+                <!-- Upcoming Events (relative to Nov 5, 2025) --><button class="event-button p-4 bg-gray-800/60 rounded-lg border border-gray-700" data-date="2025-11-06T12:30:00" data-name="Baldur's Gate 3">
+                    <span class="block font-bold text-lg">Baldur's Gate 3</span>
+                    <span class="block text-sm text-gray-400">Nov 6, 2025 @ 12:30 PM</span>
+                </button>
+                <button class="event-button p-4 bg-gray-800/60 rounded-lg border border-gray-700" data-date="2025-11-10T12:30:00" data-name="Stardew Valley">
+                    <span class="block font-bold text-lg">Stardew Valley</span>
+                    <span class="block text-sm text-gray-400">Nov 10, 2025 @ 12:30 PM</span>
+                </button>
+                <button class="event-button p-4 bg-gray-800/60 rounded-lg border border-gray-700" data-date="2025-11-13T12:30:00" data-name="FF7 Remake">
+                    <span class="block font-bold text-lg">FF7 Remake</span>
+                    <span class="block text-sm text-gray-400">Nov 13, 2025 @ 12:30 PM</span>
+                </button>
+                <button class="event-button p-4 bg-gray-800/60 rounded-lg border border-gray-700" data-date="2025-11-27T12:30:00" data-name="Stardew Valley">
+                    <span class="block font-bold text-lg">Stardew Valley</span>
+                    <span class="block text-sm text-gray-400">Nov 27, 2025 @ 12:30 PM</span>
+                </button>
+            </div>
         </div>
     </div>
 
     <script>
-        // --- The JavaScript Countdown Logic ---
-
-        // 3. SET YOUR TARGET DATE HERE
-        const countDownDate = new Date("October 31, 2025 12:30:00").getTime();
-
-        // 4. Get the HTML elements we need to update
+        // --- Get All Elements ---
         const daysEl = document.getElementById('days');
         const hoursEl = document.getElementById('hours');
         const minutesEl = document.getElementById('minutes');
         const secondsEl = document.getElementById('seconds');
         const countdownEl = document.getElementById('countdown');
         const expiredEl = document.getElementById('expired-message');
+        const countdownTitleEl = document.getElementById('countdown-title');
+        const eventListEl = document.getElementById('event-list');
+        const allEventButtons = document.querySelectorAll('.event-button');
 
-        // 5. Create a function to update the clock
+        let activeCountdownInterval = null; // To store the running timer
+        let targetDate; // To store the active target date
+        let targetName; // To store the active target name
+
+        // --- Countdown Logic ---
         function updateClock() {
-            // ... (rest of the clock logic is unchanged)
             const now = new Date().getTime();
-            const distance = countDownDate - now;
+            const distance = targetDate - now;
 
+            if (distance <= 0) {
+                // Timer is done
+                clearInterval(activeCountdownInterval);
+                countdownEl.classList.add('hidden');
+                expiredEl.classList.remove('hidden');
+                countdownTitleEl.textContent = `"${targetName}" is live!`;
+                return;
+            }
+
+            // Make sure timer and title are visible
+            countdownEl.classList.remove('hidden');
+            expiredEl.classList.add('hidden');
+
+            // Calculate time
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            
-            if (distance < 0) {
-                clearInterval(countdownInterval); // Stop the timer
-                countdownEl.classList.add('hidden'); // Hide the clock
-                expiredEl.classList.remove('hidden'); // Show the expired message
-                return;
-            }
 
+            // Update HTML
             daysEl.innerHTML = String(days).padStart(2, '0');
             hoursEl.innerHTML = String(hours).padStart(2, '0');
             minutesEl.innerHTML = String(minutes).padStart(2, '0');
             secondsEl.innerHTML = String(seconds).padStart(2, '0');
         }
-        
-        // 9. Run the function once immediately
-        updateClock();
 
-        // 10. Run the updateClock function every 1 second
-        const countdownInterval = setInterval(updateClock, 1000);
+        function startCountdown(dateString, name, clickedButton) {
+            // Clear any old timer
+            if (activeCountdownInterval) {
+                clearInterval(activeCountdownInterval);
+            }
 
+            // Set the new target date
+            targetDate = new Date(dateString).getTime();
+            targetName = name;
+            countdownTitleEl.textContent = `Time until "${targetName}":`;
 
-        // --- NEW: JavaScript for Image Slideshow ---
+            // Remove 'active' class from all buttons
+            allEventButtons.forEach(btn => btn.classList.remove('active'));
 
-        // 1. Get all the images with the "slideshow-image" class
+            // Add 'active' class to the clicked button
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            }
+
+            // Run the clock once immediately
+            updateClock();
+            
+            // Start the new timer
+            activeCountdownInterval = setInterval(updateClock, 1000);
+        }
+
+        // --- Event Listener for Clicks ---
+        eventListEl.addEventListener('click', function(e) {
+            // Find the button that was clicked on
+            const clickedButton = e.target.closest('.event-button');
+            
+            if (clickedButton) {
+                const dateString = clickedButton.dataset.date;
+                const name = clickedButton.dataset.name;
+                
+                // Check if this event is in the past
+                if (new Date(dateString).getTime() < new Date().getTime()) {
+                    // Don't start a countdown for past events
+                    countdownTitleEl.textContent = `"${name}" has already streamed!`;
+                    countdownEl.classList.add('hidden');
+                    expiredEl.classList.add('hidden');
+                    
+                    // Set button state
+                    allEventButtons.forEach(btn => btn.classList.remove('active'));
+                    clickedButton.classList.add('active');
+                } else {
+                    // Start the countdown for this future event
+                    startCountdown(dateString, name, clickedButton);
+                }
+            }
+        });
+
+        // --- Slideshow Logic ---
         const slides = document.querySelectorAll('.slideshow-image');
         let currentSlideIndex = 0;
 
-        // 2. Create a function to change the slide
         function showNextSlide() {
-            // Hide the current slide (set opacity to 0)
             if (slides.length > 0) {
                 slides[currentSlideIndex].classList.remove('opacity-100');
                 slides[currentSlideIndex].classList.add('opacity-0');
-
-                // Move to the next slide index
-                currentSlideIndex = (currentSlideIndex + 1) % slides.length; // % (modulo) loops back to 0
-
-                // Show the new slide (set opacity to 100)
+                
+                currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                
                 slides[currentSlideIndex].classList.remove('opacity-0');
                 slides[currentSlideIndex].classList.add('opacity-100');
             }
         }
-
-        // 3. Set an interval to run the showNextSlide function every 4 seconds (4000 milliseconds)
         setInterval(showNextSlide, 4000);
 
+        // --- Initialize Page ---
+        function initializePage() {
+            const now = new Date().getTime();
+            let nextUpcomingEvent = null;
+
+            // Find the *next* event that hasn't happened yet
+            // We sort the buttons by date
+            const sortedEvents = Array.from(allEventButtons).sort((a, b) => {
+                return new Date(a.dataset.date) - new Date(b.dataset.date);
+            });
+
+            for (const eventButton of sortedEvents) {
+                const eventDate = new Date(eventButton.dataset.date).getTime();
+                if (eventDate > now) {
+                    // This is the first event in the future
+                    nextUpcomingEvent = eventButton;
+                    break;
+                } else {
+                    // This event is in the past, let's disable it and style it
+                    eventButton.classList.add('opacity-50', 'line-through');
+                    eventButton.disabled = true;
+                }
+            }
+
+            // Start the countdown with the next upcoming event
+            if (nextUpcomingEvent) {
+                startCountdown(nextUpcomingEvent.dataset.date, nextUpcomingEvent.dataset.name, nextUpcomingEvent);
+            } else {
+                // All events are in the past
+                countdownTitleEl.textContent = "No upcoming streams found!";
+                countdownEl.classList.add('hidden');
+            }
+        }
+
+        initializePage();
     </script>
 
 </body>
 </html>
-
