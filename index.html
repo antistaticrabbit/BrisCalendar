@@ -10,10 +10,21 @@
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=Inter:wght@400;900&display=swap" rel="stylesheet">
     
     <style>
+        /* NEW: Animated Gradient Background */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: radial-gradient(ellipse at center, #2c1a3e, #111118);
+            /* NEW: More colorful, "fun" gradient */
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, #ffc700);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
         }
+        
         .title-font {
             font-family: 'EB Garamond', serif;
         }
@@ -30,20 +41,92 @@
         .event-button.active {
             background-color: #6d28d9; /* Bright purple */
             color: #ffffff;
-            box-shadow: 0 0 15px rgba(167, 139, 250, 0.5);
+            /* Updated: Stronger glow for active button */
+            box-shadow: 0 0 25px rgba(167, 139, 250, 0.7), 0 0 10px rgba(167, 139, 250, 0.5);
             border-color: #a78bfa;
         }
+
+        /* NEW: Styles for Social Links */
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ddd;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .social-link svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-right: 0.5rem;
+            fill: currentColor;
+        }
+        /* Twitch hover color */
+        .social-link.twitch:hover {
+            background-color: #9146FF;
+            color: #ffffff;
+            border-color: #9146FF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(145, 70, 255, 0.4);
+        }
+        /* YouTube hover color */
+        .social-link.youtube:hover {
+            background-color: #FF0000;
+            color: #ffffff;
+            border-color: #FF0000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+        }
+
+        /* NEW: Subtle glow for countdown numbers */
+        #countdown span[id] {
+            text-shadow: 0 0 8px rgba(221, 214, 254, 0.3);
+        }
+
+        /* NEW: Pulse animation for live message */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        #expired-message h2 {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
     </style>
 </head>
-<body class="text-white flex items-center justify-center min-h-screen p-4">
+<!-- UPDATED: Removed p-4, added min-h-dvh for better mobile support -->
+<body class="text-white flex items-center justify-center min-h-dvh">
 
-    <!-- Main Content Box --><div class="bg-gray-900 bg-opacity-70 backdrop-blur-sm p-8 sm:p-12 rounded-2xl shadow-2xl text-center max-w-4xl w-full border border-purple-500/30 shadow-purple-500/20">
+    <!-- Main Content Box -->
+    <!-- UPDATED: Added padding, changed max-w-4xl to max-w-6xl for wider screens -->
+    <div class="bg-gray-900 bg-opacity-70 backdrop-blur-sm p-4 sm:p-8 lg:p-12 rounded-2xl shadow-2xl text-center max-w-6xl w-full my-8 border border-purple-500/30 shadow-purple-500/20">
         
-        <h1 class="text-4xl sm:text-6xl font-black text-purple-300 mb-4 tracking-tight title-font">
+        <h1 class="text-4xl sm:text-6xl font-black text-purple-300 mb-6 tracking-tight title-font">
             Bri's Streaming Calendar
         </h1>
 
-        <!-- Image Slideshow Container with your 4 new photos --><!-- These URLs now point to the images you specified --><div id="slideshow-container" class="w-full max-w-lg mx-auto h-64 sm:h-80 relative rounded-lg overflow-hidden mb-8 border border-purple-500/30 shadow-lg">
+        <!-- Social Links -->
+        <div class="flex flex-wrap justify-center gap-4 mb-8">
+            <!-- Twitch Link -->
+            <a href="https://www.twitch.tv/bundledbri" target="_blank" rel="noopener noreferrer" class="social-link twitch">
+                <!-- Twitch SVG Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.714 0h1.714v5.143h-1.714zM4 2v17.143h5.143v3.428h2.571l3.428-3.428h4.286L24 14.857V2H4zm18.286 12L19.428 17H14l-3 3v-3H5.714V3.714h16.572V14z"/></svg>
+                <span>Twitch</span>
+            </a>
+            <!-- YouTube Link -->
+            <a href="https://www.youtube.com/@bundledbri" target="_blank" rel="noopener noreferrer" class="social-link youtube">
+                <!-- YouTube SVG Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                <span>YouTube</span>
+            </a>
+        </div>
+
+
+        <!-- Image Slideshow Container -->
+        <div id="slideshow-container" class="w-full max-w-lg mx-auto h-64 sm:h-80 relative rounded-lg overflow-hidden mb-8 border border-purple-500/30 shadow-lg">
             <img src="https://raw.githubusercontent.com/antistaticrabbit/Cosplay-Countdown/main/Bri1.jpg" 
                  alt="Bri's Stream Photo 1" 
                  class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-100">
@@ -58,11 +141,13 @@
                  class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-0">
         </div>
 
-        <!-- Title for the countdown timer --><p id="countdown-title" class="text-lg sm:text-2xl text-purple-200 mb-4">
+        <!-- Title for the countdown timer -->
+        <p id="countdown-title" class="text-lg sm:text-2xl text-purple-200 mb-4">
             Loading...
         </p>
 
-        <!-- The Countdown Timer --><div id="countdown" class="flex justify-center gap-2 sm:gap-4 mb-8">
+        <!-- The Countdown Timer -->
+        <div id="countdown" class="flex justify-center gap-2 sm:gap-4 mb-8">
             <div class="bg-gray-700/50 p-4 rounded-lg min-w-[70px] sm:min-w-[100px] border border-gray-700">
                 <span id="days" class="block text-4xl sm:text-6xl font-bold text-purple-200">00</span>
                 <span class="block text-xs sm:text-sm uppercase text-gray-400">Days</span>
@@ -81,14 +166,24 @@
             </div>
         </div>
 
-        <!-- This will be shown when the timer hits zero --><div id="expired-message" class="hidden my-8">
-            <h2 class="text-3xl sm:text-4xl font-bold text-green-400">This event is live now!</h2>
-        </div>
+        <!-- This will be shown when the timer hits zero -->
+        <!-- NEW: Wrapped in an anchor tag to her Twitch -->
+        <a id="live-link" href="https://www.twitch.tv/bundledbri" target="_blank" rel="noopener noreferrer">
+            <div id="expired-message" class="hidden my-8">
+                <h2 class="text-3xl sm:text-4xl font-bold text-green-400">
+                    This event is live now!
+                    <!-- NEW: Added call to action -->
+                    <span class="text-xl block font-normal text-green-200">(Click to Watch)</span>
+                </h2>
+            </div>
+        </a>
 
-        <!-- Clickable Event List --><div class="border-t border-purple-500/30 pt-8">
+        <!-- Clickable Event List -->
+        <div class="border-t border-purple-500/30 pt-8">
             <h3 class="text-2xl font-bold text-gray-300 mb-6">Upcoming Streams</h3>
             <div id="event-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Events from your calendar. The JS will find these and make them clickable. --><!-- Past Events (relative to Nov 5, 2025) --><button class="event-button p-4 bg-gray-800/60 rounded-lg border border-gray-700" data-date="2025-10-27T10:30:00" data-name="Stardew Valley">
+                <!-- Events from your calendar. The JS will find these and make them clickable. -->
+                <button class="event-button p-4 bg-gray-800/60 rounded-lg border border-gray-700" data-date="2025-10-27T10:30:00" data-name="Stardew Valley">
                     <span class="block font-bold text-lg">Stardew Valley</span>
                     <span class="block text-sm text-gray-400">Oct 27, 2025 @ 10:30 AM</span>
                 </button>
@@ -113,7 +208,8 @@
                     <span class="block text-sm text-gray-400">Nov 3, 2025 @ 5:30 PM</span>
                 </button>
 
-                <!-- Upcoming Events (relative to Nov 5, 2025) --><button class="event-button p-4 bg-gray-800/60 rounded-lg border border-gray-700" data-date="2025-11-06T12:30:00" data-name="Baldur's Gate 3">
+                <!-- Upcoming Events (relative to Nov 5, 2025) -->
+                <button class="event-button p-4 bg-gray-800/60 rounded-lg border border-gray-700" data-date="2025-11-06T12:30:00" data-name="Baldur's Gate 3">
                     <span class="block font-bold text-lg">Baldur's Gate 3</span>
                     <span class="block text-sm text-gray-400">Nov 6, 2025 @ 12:30 PM</span>
                 </button>
@@ -251,7 +347,8 @@
 
         // --- Initialize Page ---
         function initializePage() {
-            const now = new Date().getTime();
+            // CRITICAL FIX: Use the REAL current time
+            const now = new Date().getTime(); 
             let nextUpcomingEvent = null;
 
             // Find the *next* event that hasn't happened yet
@@ -264,8 +361,9 @@
                 const eventDate = new Date(eventButton.dataset.date).getTime();
                 if (eventDate > now) {
                     // This is the first event in the future
-                    nextUpcomingEvent = eventButton;
-                    break;
+                    if (!nextUpcomingEvent) {
+                        nextUpcomingEvent = eventButton;
+                    }
                 } else {
                     // This event is in the past, let's disable it and style it
                     eventButton.classList.add('opacity-50', 'line-through');
@@ -278,7 +376,7 @@
                 startCountdown(nextUpcomingEvent.dataset.date, nextUpcomingEvent.dataset.name, nextUpcomingEvent);
             } else {
                 // All events are in the past
-                countdownTitleEl.textContent = "No upcoming streams found!";
+                countdownTitleEl.textContent = "No upcoming streams scheduled!";
                 countdownEl.classList.add('hidden');
             }
         }
